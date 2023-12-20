@@ -56,10 +56,17 @@ function register() {
     return mysqli_affected_rows($connection);
 }
 
-function setTransaction() {
+function setTransaction($id) {
     global $connection;
+    $user = $_SESSION['auth']['np'];
+    $bundle = getData("SELECT * FROM bundles WHERE id = '$id'")[0];
+    $bundleName = $bundle['name'];
+    $bundlePrice = $bundle['price'];
+    $date = date('Y-m-d H:i:s');
 
-    
+    $query = "INSERT INTO transactions (id, user_np, paket, tanggal, total) VALUES ('','$user','$bundleName','$date','$bundlePrice')";
+    mysqli_query($connection, $query);
+    return mysqli_affected_rows($connection);
 }
 
 function deleteCustomer($np) {
