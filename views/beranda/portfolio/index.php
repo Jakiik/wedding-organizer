@@ -1,4 +1,5 @@
 <?php
+session_start();
 require('../../../module/modul.php');
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
@@ -32,14 +33,6 @@ if (isset($_GET['id'])) {
 
     <!-- Template Main CSS File -->
     <link href="../assets/css/style.css" rel="stylesheet">
-
-    <!-- =======================================================
-  * Template Name: Baker
-  * Updated: Sep 18 2023 with Bootstrap v5.3.2
-  * Template URL: https://bootstrapmade.com/baker-free-onepage-bootstrap-theme/
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
 </head>
 
 <body>

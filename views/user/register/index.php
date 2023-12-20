@@ -1,34 +1,22 @@
 <?php
 session_start();
-
-// Check if the user is already logged in, redirect to dashboard if true
-if (isset($_SESSION['user'])) {
-    header('Location: dashboard.php');
-    exit;
-}
-
-require_once 'config.php';
-
-// Check if the form is submitted
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Get user input
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-
-    // Insert new user into the database (you should use prepared statements to prevent SQL injection)
-    $query = "INSERT INTO users (username, password) VALUES ('$username', '$password')";
-    $result = mysqli_query($connection, $query);
-
-    if ($result) {
-        $_SESSION['user'] = $username;
-        header('Location: dashboard.php'); // Redirect to dashboard or home page
-        exit;
+require("../../../module/modul.php");
+if ($_SERVER["REQUEST_METHOD"] === 'POST') {
+    if (register() > 0) {
+        echo "
+        <script>
+        alert('berhasil mendaftar');
+        </script>
+        ";
+        header("Location: http://localhost/wedding-organizer//views/user/login");
     } else {
-        $error_message = "Registration failed";
+        echo "
+        <script>
+        alert('gagal mendaftar');
+        </script>
+        ";
     }
 }
-
-mysqli_close($connection);
 ?>
 
 <!DOCTYPE html>
@@ -57,15 +45,35 @@ mysqli_close($connection);
 
                     <form method="post">
                         <div class="mb-3">
-                            <label for="username" class="form-label">Username</label>
-                            <input type="text" class="form-control" id="username" name="username" required>
+                            <label for="name" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="name" name="name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="address" class="form-label">Alamat</label>
+                            <input type="text" class="form-control" id="address" name="address" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="phone" class="form-label">No Hp</label>
+                            <input type="text" class="form-control" id="phone" name="phone" required>
                         </div>
                         <div class="mb-3">
                             <label for="password" class="form-label">Password</label>
                             <input type="password" class="form-control" id="password" name="password" required>
                         </div>
+                        <div class="mb-3">
+                            <label for="confirm-password" class="form-label">Confirm Password</label>
+                            <input type="password" class="form-control" id="confirm-password" name="confirm-password" required>
+                        </div>
                         <button type="submit" class="btn btn-primary">Register</button>
                     </form>
+                    <div>
+                        <span>Sudah memiliki akun?</span>
+                        <a href="http://localhost/wedding-organizer/views/user/login/">Login</a>
+                    </div>
                 </div>
             </div>
         </div>
