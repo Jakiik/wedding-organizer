@@ -1,7 +1,17 @@
+<?php
+require('../../../module/modul.php');
+
+if (isset($_GET['id'])) {
+  $id = $_GET['id'];
+  $bundle = getData("SELECT * FROM bundles WHERE id = '$id'")[0];
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="utf-8">
+  <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
   <title>Baker Bootstrap Template - Index</title>
@@ -25,33 +35,34 @@
   <!-- Template Main CSS File -->
   <style>
     body {
-        font-family: "Open Sans", sans-serif;
-        color: #444444;
-        }
+      font-family: "Open Sans", sans-serif;
+      color: #444444;
+    }
 
-a {
-  color: #ffc107;
-  text-decoration: none;
-}
+    a {
+      color: #ffc107;
+      text-decoration: none;
+    }
 
-h1,
-h2,
-h3{
-  font-family: "Raleway", sans-serif;
-}
+    h1,
+    h2,
+    h3 {
+      font-family: "Raleway", sans-serif;
+    }
 
     ul {
-    padding: 0;
-    list-style: none;
-    color: #444444;
-    text-align: center;
-    line-height: 20px;
-    font-size: 14px;
+      padding: 0;
+      list-style: none;
+      color: #444444;
+      text-align: center;
+      line-height: 20px;
+      font-size: 14px;
     }
-    
+
     .container {
       background-image: url("assets/img/bundling/bundlingbg1.jpg");
-      opacity: 0.7; /* Ubah nilai opacity sesuai kebutuhan (0.0 - 1.0) */
+      opacity: 0.7;
+      /* Ubah nilai opacity sesuai kebutuhan (0.0 - 1.0) */
       height: 500px;
       width: 100%;
       background-size: cover;
@@ -65,40 +76,37 @@ h3{
       transform: translate(-50%, -50%);
       color: white;
     }
-
   </style>
 </head>
+
 <body>
-    <h1 align="center">Perlengkapan Paket Silver</h1>
-
+  <a href="http://localhost/wedding-organizer/">Kembali</a>
+  <div class="">
+    <h1 align="center">Perlengkapan Paket <?= $bundle['name'] ?></h1>
     <p>
-        <h3 align="center">Makeup Pengantin</h3>
-        <ul>
-            <li>Free <i>softlens</i> normal</li>
-            <li>Free kuku palsu</li>
-            <li>Busana pengantin sepasang</li>
-            <li>Rangkaian melati fresh</li>
-        </ul>
+    <h3 align="center">Makeup Pengantin</h3>
+    <ul>
+      <?php foreach (json_decode($bundle['makeup']) as $key => $value) : ?>
+        <li><?= $value ?></li>
+      <?php endforeach; ?>
+    </ul>
+    <h3 align="center">Dokumentasi</h3>
+    <ul>
+      <?php foreach (json_decode($bundle['dokumentasi']) as $key => $value) : ?>
+        <li><?= $value ?></li>
+      <?php endforeach; ?>
+    </ul>
 
-        <h3 align="center">Dokumentasi</h3>
-        <ul>
-            <li><i>Unlimited Shoot</i></li>
-            <li>Enam (6) jam kerja</li>
-            <li>Edit dan cetak 100 foto</li>
-            <li>Cetak 12R</li>
-            <li>Album magnetik premium</li>
-            <li><i>All file in flashdisk</i></li>
-        </ul>
-
-        <h3 align="center">Dekorasi</h3>
-        <ul>
-            <li>Dekorasi ukuran 3 meter x 3.5 meter</li>
-            <li><i>Mix flowers</i></li>
-            <li>Kursi sofa tengah 1</li>
-            <li>Alas melamin putih</li>
-            <li>Buket bunga 1 <i>by</i> tim dekorasi</li>
-            <li><i>Welcome Sign Banner</i></li>
-        </ul>
+    <h3 align="center">Dekorasi</h3>
+    <ul>
+      <ul>
+        <?php foreach (json_decode($bundle['dekorasi']) as $key => $value) : ?>
+          <li><?= $value ?></li>
+        <?php endforeach; ?>
+      </ul>
+    </ul>
     </p>
+  </div>
 </body>
+
 </html>
