@@ -1,7 +1,7 @@
 <?php
 session_start();
-require('../../module/modul.php');
-$bundles = getData('SELECT * FROM bundles');
+require('../../../module/modul.php');
+$customers = getData("SELECT * FROM users WHERE isAdmin = 'false'");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -58,12 +58,12 @@ $bundles = getData('SELECT * FROM bundles');
                     <!-- Navigation -->
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link active" href="http://localhost/wedding-organizer/views/dashboard/">
+                            <a class="nav-link" href="http://localhost/wedding-organizer/views/dashboard/">
                                 <i class="bi bi-house"></i> Dashboard
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="http://localhost/wedding-organizer/views/dashboard/customer/">
+                            <a class="nav-link active" href="http://localhost/wedding-organizer/views/dashboard/customer/">
                                 <i class="bi bi-people"></i> Customers
                             </a>
                         </li>
@@ -134,32 +134,37 @@ $bundles = getData('SELECT * FROM bundles');
                 <div class="container-fluid">
                     <div class="card shadow border-0 mb-7">
                         <div class="card-header">
-                            <h5 class="mb-0">Paket</h5>
+                            <h5 class="mb-0">Customer</h5>
                         </div>
                         <div class="table-responsive">
                             <table class="table table-hover table-nowrap">
                                 <thead class="thead-light">
                                     <tr>
-                                        <th scope="col">No.</th>
-                                        <th scope="col">Paket</th>
-                                        <th scope="col">Harga</th>
-                                        <th scope="col">Jam Kerja</th>
+                                        <th scope="col">No</th>
+                                        <th scope="col">Nama</th>
+                                        <th scope="col">Email</th>
+                                        <th scope="col">Alamat</th>
+                                        <th scope="col">No Handphone</th>
                                         <th scope="col">Action</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php foreach ($bundles as $key => $value) : ?>
+                                    <?php foreach ($customers as $key => $value) : ?>
                                         <tr>
                                             <td><?= $key + 1 ?></td>
-                                            <td><?= $value["name"] ?></td>
-                                            <td><?= number_format($value['price'], 0, ',', '.') ?></td>
-                                            <td><?= $value["jam_kerja"] ?> Jam</td>
+                                            <td>
+                                                <a class="text-heading font-semibold" href="#"><?= $value['name'] ?></a>
+                                            </td>
+                                            <td><?= $value['email'] ?></td>
+                                            <td><?= $value['address'] ?></td>
+                                            <td><?= $value['phone'] ?></td>
+                                            <!-- <td><?= $value[''] ?></td> -->
                                             <td class="">
-                                                <a href="http://localhost/wedding-organizer/views/dashboard/detail?id=<?= $value['id'] ?>" class="btn btn-sm btn-neutral">View</a>
-                                                <button type="button" onclick="showSweetAlert()" class="btn btn-sm btn-square btn-neutral text-danger-hover">
-                                                <a href=""></a>
+                                                <a href="#" class="btn btn-sm btn-neutral">View</a>
+                                                <a href="http://localhost/wedding-organizer/views/dashboard/customer/delete?np=<?= $value['np'] ?>" type="button" class="btn btn-sm btn-square btn-neutral text-danger-hover">
                                                     <i class="bi bi-trash"></i>
-                                                </button>
+                                                </a>
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>

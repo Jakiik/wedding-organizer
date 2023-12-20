@@ -1,4 +1,12 @@
 <?php
+session_start();
+$login = false;
+$isAdmin = false;
+if (isset($_SESSION["login"])) {
+    $login = $_SESSION["login"];
+    $auth = $_SESSION["auth"];
+    $isAdmin = $auth["isAdmin"];
+}
 require('./module/modul.php');
 $bundles = getData('SELECT * FROM bundles');
 $portfolios = getData("SELECT * FROM portfolios");
@@ -30,14 +38,6 @@ $portfolios = getData("SELECT * FROM portfolios");
 
     <!-- Template Main CSS File -->
     <link href="assets/css/style.css" rel="stylesheet">
-
-    <!-- =======================================================
-  * Template Name: Baker
-  * Updated: Sep 18 2023 with Bootstrap v5.3.2
-  * Template URL: https://bootstrapmade.com/baker-free-onepage-bootstrap-theme/
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
 </head>
 
 <body>
@@ -47,8 +47,6 @@ $portfolios = getData("SELECT * FROM portfolios");
         <div class="container d-flex align-items-center justify-content-between">
 
             <h1 class="logo"><a href="index.html">VK PROJECT</a></h1>
-            <!-- Uncomment below if you prefer to use an image logo -->
-            <!-- <a href="index.html" class="logo"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
             <nav id="navbar" class="navbar">
                 <ul>
@@ -57,6 +55,14 @@ $portfolios = getData("SELECT * FROM portfolios");
                     <li><a class="nav-link scrollto " href="#portfolio">Galery</a></li>
                     <li><a class="nav-link scrollto" href="#pricing">Bundling</a></li>
                     <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+                    <?php if ($isAdmin) : ?>
+                        <li><a class="" href="http://localhost/wedding-organizer/views/dashboard/">Dashboard</a></li>
+                    <?php endif; ?>
+                    <?php if ($login) : ?>
+                        <li><a class="" href="http://localhost/wedding-organizer/views/user/logout/">Logout</a></li>
+                    <?php else : ?>
+                        <li><a class="" href="http://localhost/wedding-organizer/views/user/login/">Login</a></li>
+                    <?php endif; ?>
                 </ul>
                 <i class="bi bi-list mobile-nav-toggle"></i>
             </nav><!-- .navbar -->

@@ -1,6 +1,9 @@
 <?php
+session_start();
 require('../../../module/modul.php');
-
+if(!isset($_SESSION['login'])){
+  header('Location: http://localhost/wedding-organizer/views/user/login');
+}
 if (isset($_GET['id'])) {
   $id = $_GET['id'];
   $bundle = getData("SELECT * FROM bundles WHERE id = '$id'")[0];
@@ -107,6 +110,7 @@ if (isset($_GET['id'])) {
     </ul>
     </p>
   </div>
+  <a href="http://localhost/wedding-organizer/views/beranda/payment?id=<?= $bundle['id'] ?>">Pesan Sekarang</a>
 </body>
 
 </html>
